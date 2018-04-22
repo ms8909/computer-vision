@@ -1,7 +1,7 @@
 # S³FD: Single Shot Scale-invariant Face Detector
 A PyTorch Implementation of Single Shot Scale-invariant Face Detector converted to Face Recognition system.
 
-Testing and Eval code at : https://github.com/clcarwin/SFD_pytorch
+Code based on : https://github.com/clcarwin/SFD_pytorch
 
 ## Train 
 ```
