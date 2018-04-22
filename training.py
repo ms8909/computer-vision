@@ -101,7 +101,7 @@ def train_model(model, criterion, optimizer, num_epochs = 100):
         print(running_loss)
 
         
-if __name__="main":
+if __name__=="__main__":
     myModel = s3fd()
     loadedModel = torch.load('s3fd_convert.pth')
     newModel = myModel.state_dict()
