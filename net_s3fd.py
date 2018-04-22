@@ -104,7 +104,7 @@ class s3fd(nn.Module):
         #print(f7_2.size())
         #m = F.max_pool2d(h, 2, 2)
         #print(h.size())
-        m = f5_3.view(1,-1)
+        m = f7_2.view(1,-1)
         #print(m)
         op = self.fc_1(m)
         return F.softmax(op)
