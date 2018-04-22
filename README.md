@@ -4,7 +4,9 @@ A PyTorch Implementation of Single Shot Scale-invariant Face Detector converted 
 Testing and Eval code at : https://github.com/clcarwin/SFD_pytorch
 
 ## Train 
+```
 python3 training.py
+```
 
 ## Model
 [s3fd_convert.7z](https://github.com/clcarwin/SFD_pytorch/releases/tag/v0.1)
