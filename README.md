@@ -5,7 +5,7 @@ Code based on : https://github.com/clcarwin/SFD_pytorch
 
 ## Train 
 ```
-python3 training.py
+python3 Finetuning_clean.py
 ```
 
 ## Model
@@ -15,7 +15,6 @@ python3 training.py
 ```
 python test.py --model data/s3fd_convert.pth --path data/test01.jpg
 ```
-![output](data/test01_output.png)
 
 # References
 [SFD](https://github.com/sfzhang15/SFD)
