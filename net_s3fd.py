@@ -48,7 +48,7 @@ class s3fd(nn.Module):
         self.conv7_1 = nn.Conv2d(512, 128, kernel_size=1, stride=1, padding=0)
         self.conv7_2 = nn.Conv2d(128, 256, kernel_size=3, stride=2, padding=1)
 
-        self.fc_1 = nn.Linear(4096,num_classes)
+        self.fc_1 = nn.Linear(2304,num_classes)
         #self.fc_2 = nn.linear()
 #         self.conv3_3_norm = L2Norm(256,scale=10)
 #         self.conv4_3_norm = L2Norm(512,scale=8)
