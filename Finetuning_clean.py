@@ -1,9 +1,3 @@
-
-# coding: utf-8
-
-# In[1]:
-
-
 from __future__ import print_function
 
 import torch
@@ -32,10 +26,6 @@ from sklearn.preprocessing import MultiLabelBinarizer
 from PIL import Image
 
 
-# In[2]:
-
-
-
 class CelebDataset(Dataset):
     """Dataset wrapping images and target labels
     Arguments:
@@ -48,7 +38,8 @@ class CelebDataset(Dataset):
     def __init__(self, csv_path, img_path, img_ext, transform=None):
     
         tmp_df = pd.read_csv(csv_path)
-        assert tmp_df['Image_Name'].apply(lambda x: os.path.isfile(img_path + x + img_ext)).all(), "Some images referenced in the CSV file were not found"
+        assert tmp_df['Image_Name'].apply(lambda x: os.path.isfile(img_path + x + img_ext)).all(), \
+"Some images referenced in the CSV file were not found"
         
         self.mlb = MultiLabelBinarizer()
         self.img_path = img_path
@@ -57,7 +48,6 @@ class CelebDataset(Dataset):
 
         self.X_train = tmp_df['Image_Name']
         self.y_train = self.mlb.fit_transform(tmp_df['Gender'].str.split()).astype(np.float32)
-
     def __getitem__(self, index):
         img = cv2.imread(self.img_path + self.X_train[index] + self.img_ext)
         img = cv2.resize(img, (256,256))
@@ -76,21 +66,13 @@ class CelebDataset(Dataset):
 
     def __len__(self):
         return len(self.X_train.index)
-
-
-# In[3]:
-
-
+    
 transformations = transforms.Compose(
     [
      transforms.ToTensor()
      
      #transforms.Normalize(mean=[104,117,123])
      ])
-
-
-# In[4]:
-
 
 train_data = "index.csv"
 img_path = "data/Celeb_Small_Dataset/"
@@ -103,10 +85,6 @@ train_loader = DataLoader(dset,
                          # pin_memory=True # CUDA only
                          )
 
-
-# In[5]:
-
-
 def save(model, optimizer, loss, filename):
     save_dict = {
         'model_state_dict': model.state_dict(),
@@ -114,10 +92,7 @@ def save(model, optimizer, loss, filename):
         'loss': loss.data[0]
         }
     torch.save(save_dict, filename)
-
-
-# In[6]:
-
+    
 
 def train_model(model, criterion, optimizer, num_classes, num_epochs = 100):
     for epoch in range(num_epochs):
@@ -135,7 +110,6 @@ def train_model(model, criterion, optimizer, num_classes, num_epochs = 100):
                 data, target = Variable(img), Variable(torch.Tensor(label))
             target = target.view(num_classes,1)
 
-
             optimizer.zero_grad()
             outputs = model(data)
             loss = criterion(outputs, target)
@@ -151,10 +125,6 @@ def train_model(model, criterion, optimizer, num_classes, num_epochs = 100):
             save(model, optimizer, loss, 'faceRecog.saved.model')
         print(running_loss)
 
-
-# In[7]:
-
-
 num_classes = 2
 myModel = s3fd(num_classes)
 loadedModel = torch.load('s3fd_convert.pth')
@@ -163,16 +133,8 @@ pretrained_dict = {k: v for k, v in loadedModel.items() if k in newModel}
 newModel.update(pretrained_dict)
 myModel.load_state_dict(newModel)
 
-
-# In[8]:
-
-
 use_cuda = True
 myModel.eval()
-
-
-# In[ ]:
-
 
 criterion = nn.MSELoss()
 
@@ -184,9 +146,6 @@ optimizer = optim.SGD(filter(lambda p: p.requires_grad,myModel.parameters()), lr
 if use_cuda:
     myModel = myModel.cuda()
 model_ft = train_model(myModel, criterion, optimizer, num_classes, num_epochs=100)
-
-
-# In[ ]:
 
 
 def transform(img_path):
@@ -219,4 +178,3 @@ print("testImage3 - ",output3)
 print("testImage1 - ",output4)
 print("testImage2 - ",output5)
 print("testImage3 - ",output6)
-
